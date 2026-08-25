@@ -1,5 +1,4 @@
-# forge-x-ch340-support
-add CH340 for Forge-X (Flashforge Adventurer 5M/Pro)
+markdown
 # CH340 Support for Forge-X Firmware (Flashforge Adventurer 5M / Pro)
 
 > **Firmware:** Forge-X (custom ff5m-based)  
@@ -20,28 +19,46 @@ The Forge-X firmware (based on [ff5m by DrA1ex](https://github.com/DrA1ex/ff5m))
 
 ---
 
-## 🧩 Requirements
+## 🚀 Quick Start (using pre-built modules)
 
-### Build host (PC):
-- Debian 13 (Trixie) or Ubuntu 24.04+ (other distros may work but are untested)
-- Internet access
-- Installed **GCC 14.2.0** ARM cross-compiler
-- Build tools (see installation commands below)
+> **If you don't want to compile the modules yourself**, you can skip straight to **Step 6** and use the pre-built modules from the [`releases`](../../releases) page or the `modules/` folder in this repository.
 
-### Printer:
-- SSH access (root privileges required)
-- Kernel config file (available via `/proc/config.gz`)
-- Enough free space in `/lib/modules/` (or use `/root/` as fallback)
+**Prerequisites:**
+- SSH access to your printer (root)
+- The pre-built modules (`usbserial.ko` and `ch341.ko`) — download them from the **Releases** section of this repository.
 
----
+**Steps:**
 
-## 🛠️ Build & Installation Guide
+1. Copy the modules to the printer:
+   ```bash
+   scp -O usbserial.ko root@<PRINTER_IP>:/root/
+   scp -O ch341.ko root@<PRINTER_IP>:/root/
+Continue from Step 7 below (temporary module loading and auto-start configuration).
 
-### 1. Prepare your build host (Debian 13)
+⚠️ Important: Pre-built modules are compiled for kernel 5.4.61+. Do not use them on other kernel versions — they will fail with invalid module format. Check your kernel version with uname -r before proceeding.
 
+🧩 Requirements (for manual build)
+Build host (PC):
+Debian 13 (Trixie) or Ubuntu 24.04+ (other distros may work but are untested)
+
+Internet access
+
+Installed GCC 14.2.0 ARM cross-compiler
+
+Build tools (see installation commands below)
+
+Printer:
+SSH access (root privileges required)
+
+Kernel config file (available via /proc/config.gz)
+
+Enough free space in /lib/modules/ (or use /root/ as fallback)
+
+🛠️ Build & Installation Guide (Full)
+1. Prepare your build host (Debian 13)
 Install the required packages:
 
-```bash
+bash
 sudo apt update
 sudo apt install -y build-essential bc bison flex libssl-dev rsync file python3 pkg-config \
     gcc-arm-linux-gnueabi binutils-arm-linux-gnueabi \
