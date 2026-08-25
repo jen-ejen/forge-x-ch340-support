@@ -180,16 +180,7 @@ If you use Klipper, add this to your printer.cfg:
 ini
 [mcu]
 serial: /dev/ttyUSB0
-🐞 Troubleshooting
-Issue	Solution
-cp: can't create '/lib/modules/5.4.61/': Is a directory	Use the full destination path: cp /root/usbserial.ko /lib/modules/5.4.61+/usbserial.ko
-No such file or directory when copying	Create the directory first: mkdir -p /lib/modules/5.4.61+/
-Module does not load after reboot	Check that /etc/init.d/S50usbserial is executable and the paths are correct
-insmod: invalid module format	Kernel version mismatch. Verify uname -r on the printer and compare with modinfo -F vermagic ch341.ko from the build host. Both must be 5.4.61+
-Device does not appear as /dev/ttyUSB0	Force the driver to bind: echo "1a86 7523" > /sys/bus/usb-serial/drivers/generic/new_id
-arm-linux-gnueabi-gcc not found	Install it: sudo apt install gcc-arm-linux-gnueabi
-Compilation warnings about extract-cert.c (OpenSSL 3.0)	Ignore them — they are harmless and do not affect the build
-Downloaded toolchain archive is HTML	Do not use manual Linaro downloads — install the cross-compiler via apt as shown in Step 1. It works perfectly on Debian 13
+
 📁 Files Added to the Printer
 text
 /lib/modules/5.4.61+/
